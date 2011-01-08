@@ -1,0 +1,8 @@
+*.[ao]
+*~
+.*
+*.ko
+*.mod.*
+Module.markers
+Module.symvers
+modules.order
