@@ -4,7 +4,6 @@
 #include <linux/mount.h>
 
 
-
 static int llfs_test_sb(struct super_block *s, void *data)
 {
 	int test = 0;
@@ -70,6 +69,7 @@ static struct file_system_type llfs_fs_type = {
 	.kill_sb	= kill_anon_super,
 	.fs_flags	= FS_REQUIRES_DEV,
 };
+
 static int hello_init(void)
 {
 	int err;
