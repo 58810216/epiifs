@@ -9,4 +9,6 @@ all:
 
 clean:
 	rm -f *.ko *.o *.mod.o *.mod.c *.symvers
+	rm -f *.markers 
+	rm -f modules.order
 endif
