@@ -1,8 +1,14 @@
 *.[ao]
-*~
 .*
 *.ko
 *.mod.*
 Module.markers
 Module.symvers
 modules.order
+
+!.gitignore
+
+
+#ignore editor file
+*.swp
+*~
