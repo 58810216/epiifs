@@ -1,4 +1,5 @@
 
+INC = ../include/
 CFLAGS = -g 
 
 objects = mkfs.o
@@ -6,14 +7,14 @@ objects = mkfs.o
 .PHONY: clean all
 
 %.o:%.c
-	$(CC) -c $(CFLAGS) $< -o $@ 
+	$(CC) -c $(CFLAGS) $< -o $@ -I$(INC) 
 
 
 all: $(objects)
-	gcc $(CFLAGS) $(objects) -o mkfs.llfs
+	gcc $(CFLAGS) $(objects) -o mkfs.epii
 
 $(objects): %.o: %.c
 
 clean:
 	rm *.o
-	rm mkfs.llfs
+	rm mkfs.epii

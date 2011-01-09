@@ -12,3 +12,5 @@ modules.order
 #ignore editor file
 *.swp
 *~
+
+tags

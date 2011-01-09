@@ -13,9 +13,15 @@
 #include <linux/loop.h>
 #include <linux/major.h>
 #include <linux/kdev_t.h>
+#include <linux/types.h>
 #include <limits.h>
 #include <errno.h>
 #include <string.h>
+
+#include "super.h"
+#include "epii_types.h"
+#include "disk-io.h"
+
 
 int is_existing_blk_or_reg_file(const char* filename)
 {
@@ -173,8 +179,10 @@ error_check:
 
 int main(int argc, char *argv[])
 {
+	struct epii_super_block super;
 	char *file;
 	int ret;
+	int fd;
 
 	if (argc != 2) {
 		fprintf(stderr, "give a partition\n");
@@ -191,6 +199,29 @@ int main(int argc, char *argv[])
 		goto error;
 
 	fprintf(stdout, "Format %s , begin format: \n", file);
+
+	fd = open(file, O_RDWR);
+	if (fd < 0) {
+		fprintf(stderr, "unable to open %s\n", file);
+		exit(1);
+	}
+
+	fprintf(stdout, "Write Super Block \n");
+	memset(&super, 0, sizeof(super));
+
+	strncpy(super.s_magic, EPII_MAGIC, sizeof(EPII_MAGIC));
+	super.s_uuid = 0x1234567012345;
+	super.s_blocksize = 4096;	
+	super.s_root = 1 << 20;
+
+	fprintf(stdout, "magic %s %lu\n", super.s_magic, sizeof(super));
+	ret = pwrite(fd, &super, sizeof(super), EPII_SUPER_INFO_OFFSET);	
+	if (ret != sizeof(super)) {
+		fprintf(stderr, "write super fail.\n");
+		ret = 0x12;
+		goto error;
+	}	
+
 	
 	return 0;
 
