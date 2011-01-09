@@ -1,5 +1,6 @@
 ifneq ($(KERNELRELEASE),)
-obj-m := hello.o
+obj-m := epiifs.o
+epiifs-objs := super.o
 
 else
 KDIR := /usr/src/linux-headers-2.6.31-14-server
